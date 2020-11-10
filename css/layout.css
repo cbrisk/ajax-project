@@ -1,0 +1,13 @@
+body {
+  width: 375px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
