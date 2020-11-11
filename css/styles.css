@@ -23,6 +23,7 @@ button {
   border: none;
   border-radius: 5px;
   outline: none;
+  font-size: 1.25rem;
 }
 
 button.results {
@@ -30,7 +31,6 @@ button.results {
   margin: 30px 0;
   background-color: #04724d;
   color: white;
-  font-size: 1.25rem;
 }
 
 input {
@@ -53,7 +53,14 @@ button.favorite {
   color: #2f20e1;
   padding: 10px 18px;
   margin: 20px 0;
-  font-size: 1.25rem;
+}
+
+button.remove {
+  padding: 6px 10px;
+  margin: 5px 30px;
+  background-color: #fc7676;
+  font-size: 1rem;
+  text-align: right;
 }
 
 button:hover,
@@ -67,6 +74,18 @@ tr {
 
 tr td:nth-child(2) {
   text-align: center;
+}
+
+ol {
+  list-style: none;
+}
+
+li {
+  color: #b0a9a9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.25rem;
 }
 
 .footer.row {

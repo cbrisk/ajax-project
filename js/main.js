@@ -2,13 +2,14 @@ var $form1 = document.querySelector('.form-one');
 var $views = document.querySelectorAll('div.view');
 var $header1 = document.querySelector('h3.city');
 var $tablerow = document.querySelectorAll('.table-row');
+var $cityDisplay = null;
 
 window.addEventListener('submit', function (event) {
   if (event.target.matches('.form-one')) {
     event.preventDefault();
     var city = $form1.elements.city.value;
     var $radio = document.querySelector('input[name="city"]:checked');
-    var $cityDisplay = $radio.nextElementSibling.firstChild.textContent;
+    $cityDisplay = $radio.nextElementSibling.firstChild.textContent;
     $form1.reset();
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://api.teleport.org/api/urban_areas/slug:' + city + '/scores/');
@@ -22,6 +23,8 @@ window.addEventListener('submit', function (event) {
     xhr.send();
     $header1.textContent = $cityDisplay;
     viewSwapping('results');
+    $favButton.disabled = false;
+    $favButton.textContent = 'Add to favorites';
   }
 });
 
@@ -33,16 +36,16 @@ window.addEventListener('click', function (event) {
   }
   if (event.target.matches('a.link')) {
     viewSwapping(event.target.getAttribute('data-view'));
-  }
-  /*if (event.target.matches('a.main')) {
-    viewSwapping('main');
-  } else if (event.target.matches('a.favorite')) {
-    viewSwapping('favorites');
   } else if (event.target.matches('button.favorite')) {
     $favButton.textContent = '✔ Added!';
-    data.favoriteCities.push($cityDisplay);
-  }*/
+    if (data.favoriteCities.indexOf($cityDisplay) === -1) {
+      data.favoriteCities.push($cityDisplay);
+    }
+    $favButton.disabled = true;
+  }
 });
+
+var $favList = document.querySelector('ol.fav-list');
 
 function viewSwapping(dataView) {
   for (var i = 0; i < $views.length; i++) {
@@ -50,6 +53,18 @@ function viewSwapping(dataView) {
       $views[i].classList.remove('hidden');
     } else {
       $views[i].classList.add('hidden');
+    }
+  }
+  if (dataView === 'favorites') {
+    $favList.innerHTML = '';
+    for (var k = 0; k < data.favoriteCities.length; k++) {
+      var $li = document.createElement('li');
+      $li.textContent = data.favoriteCities[k];
+      var $remove = document.createElement('button');
+      $remove.className = 'remove';
+      $remove.textContent = 'Remove';
+      $li.appendChild($remove);
+      $favList.appendChild($li);
     }
   }
   data.view = dataView;
