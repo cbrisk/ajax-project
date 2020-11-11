@@ -65,6 +65,10 @@ tr {
   font-size: 0.8rem;
 }
 
+tr td:nth-child(2) {
+  text-align: center;
+}
+
 .footer.row {
   background-color: #71ddb9;
 }
