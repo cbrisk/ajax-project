@@ -23,7 +23,6 @@ window.addEventListener('submit', function (event) {
     xhr.send();
     $header1.textContent = $cityDisplay;
     viewSwapping('results');
-    $favButton.disabled = false;
     $favButton.textContent = 'Add to favorites';
   }
 });
@@ -41,7 +40,6 @@ window.addEventListener('click', function (event) {
     if (data.favoriteCities.indexOf($cityDisplay) === -1) {
       data.favoriteCities.push($cityDisplay);
     }
-    $favButton.disabled = true;
   }
 });
 
