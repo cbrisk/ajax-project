@@ -15,48 +15,138 @@
     <img src="images/town.svg" alt="Image of City">
     <h3>City Quality of Life</h3>
   </header>
-  <main data-view="main">
-    <div class="row">
-      <h3 class="open">Please choose a city below to view its ratings</h3>
+  <main>
+    <div class="view" data-view="main">
+      <div class="row">
+        <h3 class="open">Please choose a city below to view its ratings</h3>
+      </div>
+      <div class="row">
+        <form class="form-one">
+          <div class="margin">
+            <input type="radio" id="san-francisco" name="city" value="san-francisco-bay-area">
+            <label for="san-francisco">San Francisco</label>
+          </div>
+          <div class="margin">
+            <input type="radio" id="los-angeles" name="city" value="los-angeles">
+            <label for="los-angeles">Los Angeles</label>
+          </div>
+          <div class="margin">
+            <input type="radio" id="denver" name="city" value="denver">
+            <label for="denver">Denver</label>
+          </div>
+          <div class="margin">
+            <input type="radio" id="phoenix" name="city" value="phoenix">
+            <label for="phoenix">Phoenix</label>
+          </div>
+          <div class="margin">
+            <input type="radio" id="seattle" name="city" value="seattle">
+            <label for="seattle">Seattle</label>
+          </div>
+          <div class="margin">
+            <input type="radio" id="miami" name="city" value="miami">
+            <label for="miami">Miami</label>
+          </div>
+          <div>
+            <button class="results" type="submit">See Results</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="row">
-      <form>
-        <div class="margin">
-          <input type="radio" id="san-francisco" name="city" value="San Francisco">
-          <label for="san-francisco">San Francisco</label>
-        </div>
-        <div class="margin">
-          <input type="radio" id="los-angeles" name="city" value="Los Angeles">
-          <label for="los-angeles">Los Angeles</label>
-        </div>
-        <div class="margin">
-          <input type="radio" id="denver" name="city" value="Denver">
-          <label for="denver">Denver</label>
-        </div>
-        <div class="margin">
-          <input type="radio" id="phoenix" name="city" value="Phoenix">
-          <label for="phoenix">Phoenix</label>
-        </div>
-        <div class="margin">
-          <input type="radio" id="seattle" name="city" value="Seattle">
-          <label for="seattle">Seattle</label>
-        </div>
-        <div class="margin">
-          <input type="radio" id="miami" name="city" value="miami">
-          <label for="miami">Miami</label>
-        </div>
-        <div>
-          <button type="submit">See Results</button>
-        </div>
-      </form>
+    <div class="view hidden" data-view="results">
+      <div class="row">
+        <h3 class="open city"></h3>
+      </div>
+      <div class="row">
+        <table>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Rate (out of 10)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-row">
+              <td>Housing</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Cost of Living</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Startups</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Venture Capital</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Travel Connectivity</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Commute</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Business Freedom</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Safety</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Healthcare</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Education</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Environmental Quality</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Economy</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Taxation</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Internet Access</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Leisure &amp; Culture</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Tolerance</td>
+              <td></td>
+            </tr>
+            <tr class="table-row">
+              <td>Outdoors</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <button class="favorite">Add to favorites</button>
+      </div>
     </div>
   </main>
   <footer>
     <div class="credit">Icons made by Freepik from www.flaticon.com</div>
     <div class="footer row">
-      <a class="link" href="#" data-view="main">Home</a>
-      <a class="link" href="#" data-view="compare">Compare</a>
-      <a class="link" href="#" data-view="favorites">Favorites</a>
+      <a class="link main" href="#" data-view="main">Home</a>
+      <a class="link compare" href="#" data-view="compare">Compare</a>
+      <a class="link favorites" href="#" data-view="favorites">Favorites</a>
     </div>
   </footer>
   <script src="js/data.js"></script>
