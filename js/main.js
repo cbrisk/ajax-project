@@ -40,6 +40,14 @@ window.addEventListener('click', function (event) {
     if (data.favoriteCities.indexOf($cityDisplay) === -1) {
       data.favoriteCities.push($cityDisplay);
     }
+  } else if (event.target.matches('button.remove')) {
+    var $listItems = document.querySelectorAll('li');
+    for (var l = 0; l < $listItems.length; l++) {
+      if (event.target.closest('li') === $listItems[l]) {
+        data.favoriteCities.splice(l, 1);
+        $listItems[l].remove();
+      }
+    }
   }
 });
 
