@@ -1,6 +1,6 @@
 var $form1 = document.querySelector('.form-one');
 var $views = document.querySelectorAll('div.view');
-var $header = document.querySelector('h3.city');
+var $header1 = document.querySelector('h3.city');
 var $tablerow = document.querySelectorAll('.table-row');
 
 window.addEventListener('submit', function (event) {
@@ -20,18 +20,28 @@ window.addEventListener('submit', function (event) {
       }
     });
     xhr.send();
-    $header.textContent = $cityDisplay;
+    $header1.textContent = $cityDisplay;
     viewSwapping('results');
   }
 });
 
+var $favButton = document.querySelector('button.favorite');
+
 window.addEventListener('click', function (event) {
-  if (!event.target.matches('a.link')) {
+  if (!event.target.matches('a.link') && !event.target.matches('button')) {
     return;
   }
-  if (event.target.matches('a.main')) {
-    viewSwapping('main');
+  if (event.target.matches('a.link')) {
+    viewSwapping(event.target.getAttribute('data-view'));
   }
+  /*if (event.target.matches('a.main')) {
+    viewSwapping('main');
+  } else if (event.target.matches('a.favorite')) {
+    viewSwapping('favorites');
+  } else if (event.target.matches('button.favorite')) {
+    $favButton.textContent = '✔ Added!';
+    data.favoriteCities.push($cityDisplay);
+  }*/
 });
 
 function viewSwapping(dataView) {

@@ -47,4 +47,8 @@ footer {
   body {
     width: 1024px;
   }
+
+  footer {
+    position: static;
+  }
 }
