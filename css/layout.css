@@ -19,6 +19,10 @@ footer {
   justify-content: center;
 }
 
+.half-column {
+  width: 40%;
+}
+
 @media screen and (min-width: 667px) {
   body {
     width: 667px;
