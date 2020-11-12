@@ -106,3 +106,9 @@ li {
   color: #b0a9a9;
   font-size: 0.5rem;
 }
+
+.form-two {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
