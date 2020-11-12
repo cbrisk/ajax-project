@@ -72,7 +72,8 @@ tr {
   font-size: 0.8rem;
 }
 
-tr td:nth-child(2) {
+tr td:nth-child(2),
+tr td:nth-child(3) {
   text-align: center;
 }
 
@@ -102,6 +103,10 @@ li {
   margin-bottom: 10px;
 }
 
+.margin-bottom {
+  margin-bottom: 20px;
+}
+
 .credit {
   color: #b0a9a9;
   font-size: 0.5rem;
@@ -111,4 +116,22 @@ li {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.first-city,
+.second-city {
+  font-size: 1rem;
+  padding: 24px 8px;
+}
+
+.red {
+  color: #f50a0a;
+}
+
+.green {
+  color: #18ff04;
+}
+
+.black {
+  color: black;
 }
