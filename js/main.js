@@ -2,14 +2,17 @@ var $form1 = document.querySelector('.form-one');
 var $form2 = document.querySelector('.form-two');
 var $views = document.querySelectorAll('div.view');
 var $header1 = document.querySelector('h3.city');
-var $tablerow = document.querySelectorAll('.table-row');
+var $results = document.querySelector('div[data-view="results"]');
+var $tablerow = $results.querySelectorAll('.table-row');
+var $compareResults = document.querySelector('div[data-view="compare-results"]');
+var $tablerowCompare = $compareResults.querySelectorAll('.table-row');
 
 var city1 = null;
 var $radio1 = null;
 var $cityDisplay1 = null;
-// var city2 = null;
-// var $radio2 = null;
-// var $cityDisplay2 = null;
+var city2 = null;
+var $radio2 = null;
+var $cityDisplay2 = null;
 
 window.addEventListener('submit', function (event) {
   if (event.target.matches('.form-one')) {
@@ -31,9 +34,55 @@ window.addEventListener('submit', function (event) {
     $header1.textContent = $cityDisplay1;
     viewSwapping('results');
     $favButton.textContent = 'Add to favorites';
-  } // else if (event.target.matches('.form-two')) {
-  // Coming soon!
-  // }
+  } else if (event.target.matches('.form-two')) {
+    event.preventDefault();
+    city1 = $form2.elements.city.value;
+    $radio1 = document.querySelector('input[name="city"]:checked');
+    $cityDisplay1 = $radio1.nextElementSibling.firstChild.textContent;
+    city2 = $form2.elements.city2.value;
+    $radio2 = document.querySelector('input[name="city2"]:checked');
+    $cityDisplay2 = $radio2.nextElementSibling.firstChild.textContent;
+    $form2.reset();
+    for (var o = 0; o < $form2FirstColumnElements.length; o++) {
+      $form2FirstColumnElements[o].disabled = false;
+      $form2SecondColumnElements[o].disabled = false;
+    }
+    xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://api.teleport.org/api/urban_areas/slug:' + city1 + '/scores/');
+    xhr.responseType = 'json';
+    xhr.addEventListener('load', function () {
+      data.firstCity = xhr.response;
+      for (var j = 0; j < data.firstCity.categories.length; j++) {
+        $tablerowCompare[j].children[1].textContent = Math.round(data.firstCity.categories[j].score_out_of_10);
+      }
+      var xhr2 = new XMLHttpRequest();
+      xhr2.open('GET', 'https://api.teleport.org/api/urban_areas/slug:' + city2 + '/scores/');
+      xhr2.responseType = 'json';
+      xhr2.addEventListener('load', function () {
+        data.secondCity = xhr2.response;
+        for (j = 0; j < data.secondCity.categories.length; j++) {
+          $tablerowCompare[j].children[2].textContent = Math.round(data.secondCity.categories[j].score_out_of_10);
+          if (Math.round(data.secondCity.categories[j].score_out_of_10) > Math.round(data.firstCity.categories[j].score_out_of_10)) {
+            $tablerowCompare[j].children[2].className = 'green';
+            $tablerowCompare[j].children[1].className = 'red';
+          } else if (Math.round(data.secondCity.categories[j].score_out_of_10) < Math.round(data.firstCity.categories[j].score_out_of_10)) {
+            $tablerowCompare[j].children[2].className = 'red';
+            $tablerowCompare[j].children[1].className = 'green';
+          } else {
+            $tablerowCompare[j].children[2].className = 'black';
+            $tablerowCompare[j].children[1].className = 'black';
+          }
+        }
+      });
+      xhr2.send();
+    });
+    xhr.send();
+    var $tdFirst = document.querySelector('.first-city');
+    var $tdSecond = document.querySelector('.second-city');
+    $tdFirst.textContent = $cityDisplay1;
+    $tdSecond.textContent = $cityDisplay2;
+    viewSwapping('compare-results');
+  }
 });
 
 var $favButton = document.querySelector('button.favorite');
@@ -44,7 +93,6 @@ window.addEventListener('click', function (event) {
   }
   if (event.target.matches('a.link')) {
     viewSwapping(event.target.getAttribute('data-view'));
-    // Remove color classes with for loop
   } else if (event.target.matches('button.favorite')) {
     $favButton.textContent = '✔ Added!';
     if (data.favoriteCities.indexOf($cityDisplay1) === -1) {
