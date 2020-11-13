@@ -143,9 +143,12 @@ var id = null;
 var url = null;
 var $message = document.querySelector('span.message');
 var $buttonResults = $form1.querySelector('button.results');
+var $divSpinner = document.querySelector('div.spinner');
 
 $form1.addEventListener('input', function (event) {
   if (event.target.matches('input[name="usercity"]')) {
+    $divSpinner.classList.remove('nonvisible');
+    $message.classList.add('nonvisible');
     $buttonResults.disabled = true;
     clearTimeout(id);
     id = setTimeout(function () {
@@ -157,8 +160,8 @@ $form1.addEventListener('input', function (event) {
         var items = data.cityOptions._links['ua:item'];
         for (var j = 0; j < items.length; j++) {
           if ($form1.elements.usercity.value === items[j].name) {
-            $message.classList.add('nonvisible');
             url = items[j].href + 'scores/';
+            $message.classList.add('nonvisible');
             break;
           }
           $message.classList.remove('nonvisible');
@@ -166,6 +169,7 @@ $form1.addEventListener('input', function (event) {
       });
       xhr.send();
       $buttonResults.disabled = false;
+      $divSpinner.classList.add('nonvisible');
     }, 5000);
   }
 });
