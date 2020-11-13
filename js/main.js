@@ -7,6 +7,7 @@ var $tablerow = $results.querySelectorAll('.table-row');
 var $compareResults = document.querySelector('div[data-view="compare-results"]');
 var $tablerowCompare = $compareResults.querySelectorAll('.table-row');
 var $summary = document.querySelector('span.summary');
+var $background = document.querySelector('div.background');
 
 var city1 = null;
 var $radio1 = null;
@@ -32,7 +33,7 @@ window.addEventListener('submit', function (event) {
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
       if (xhr.status !== 200) {
-        window.alert('No data has been received');
+        $background.classList.remove('hidden');
         $form1.disabled = false;
         return;
       }
@@ -144,6 +145,8 @@ window.addEventListener('click', function (event) {
         $listItems[l].remove();
       }
     }
+  } else if (event.target.matches('button.ok')) {
+    $background.classList.add('hidden');
   }
 });
 
