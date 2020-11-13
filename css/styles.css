@@ -89,14 +89,34 @@ li {
   font-size: 1.25rem;
 }
 
+p {
+  font-size: 0.7rem;
+  margin: 10px;
+  text-align: center;
+}
+
+span.message {
+  color: red;
+  font-size: 0.8rem;
+}
+
+input[name="usercity"] {
+  border: 2px solid#b0a9a9;
+}
+
+input[name="usercity"]:focus {
+  outline: none;
+}
+
 .footer.row {
   background-color: #71ddb9;
 }
 
 .open {
   letter-spacing: 1px;
-  padding: 20px 20px;
+  padding: 20px 20px 6px;
   text-align: center;
+  margin: 20px 20px 6px;
 }
 
 .margin {
@@ -134,4 +154,8 @@ li {
 
 .black {
   color: black;
+}
+
+.nonvisible {
+  visibility: hidden;
 }
