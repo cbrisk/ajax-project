@@ -97,6 +97,7 @@ window.addEventListener('click', function (event) {
   }
   if (event.target.matches('a.link')) {
     viewSwapping(event.target.getAttribute('data-view'));
+    $message.classList.add('nonvisible');
   } else if (event.target.matches('button.favorite')) {
     $favButton.textContent = '✔ Added!';
     if (data.favoriteCities.indexOf($cityDisplay1) === -1) {
@@ -141,9 +142,11 @@ $form2.addEventListener('input', function (event) {
 var id = null;
 var url = null;
 var $message = document.querySelector('span.message');
+var $buttonResults = $form1.querySelector('button.results');
 
 $form1.addEventListener('input', function (event) {
   if (event.target.matches('input[name="usercity"]')) {
+    $buttonResults.disabled = true;
     clearTimeout(id);
     id = setTimeout(function () {
       var xhr = new XMLHttpRequest();
@@ -162,6 +165,7 @@ $form1.addEventListener('input', function (event) {
         }
       });
       xhr.send();
+      $buttonResults.disabled = false;
     }, 5000);
   }
 });
