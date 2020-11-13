@@ -159,3 +159,7 @@ input[name="usercity"]:focus {
 .nonvisible {
   visibility: hidden;
 }
+
+.row.spinner {
+  margin-bottom: 15px;
+}
