@@ -31,17 +31,27 @@ window.addEventListener('submit', function (event) {
     xhr.open('GET', url);
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
+      if (xhr.status !== 200) {
+        window.alert('No data has been received');
+        $form1.disabled = false;
+        return;
+      }
       data.firstCity = xhr.response;
       for (var j = 0; j < data.firstCity.categories.length; j++) {
         $tablerow[j].children[1].textContent = Math.round(data.firstCity.categories[j].score_out_of_10);
       }
       $summary.innerHTML = data.firstCity.summary;
       $summary.textContent = $summary.textContent;
+      $form1.disabled = false;
+      $favButton.textContent = 'Add to favorites';
+      url = null;
+      viewSwapping('results');
+    });
+    xhr.addEventListener('error', function () {
+      window.alert('Cannot establish network connection');
     });
     xhr.send();
-    viewSwapping('results');
-    $favButton.textContent = 'Add to favorites';
-    url = null;
+    $form1.disabled = true;
   } else if (event.target.matches('.form-two')) {
     event.preventDefault();
     city1 = $form2.elements.city.value;
@@ -59,6 +69,11 @@ window.addEventListener('submit', function (event) {
     xhr.open('GET', 'https://api.teleport.org/api/urban_areas/slug:' + city1 + '/scores/');
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
+      if (xhr.status !== 200) {
+        window.alert('No data has been received');
+        $form2.disabled = false;
+        return;
+      }
       data.firstCity = xhr.response;
       for (var j = 0; j < data.firstCity.categories.length; j++) {
         $tablerowCompare[j].children[1].textContent = Math.round(data.firstCity.categories[j].score_out_of_10);
@@ -67,6 +82,11 @@ window.addEventListener('submit', function (event) {
       xhr2.open('GET', 'https://api.teleport.org/api/urban_areas/slug:' + city2 + '/scores/');
       xhr2.responseType = 'json';
       xhr2.addEventListener('load', function () {
+        if (xhr2.status !== 200) {
+          window.alert('No data has been received');
+          $form2.disabled = false;
+          return;
+        }
         data.secondCity = xhr2.response;
         for (j = 0; j < data.secondCity.categories.length; j++) {
           $tablerowCompare[j].children[2].textContent = Math.round(data.secondCity.categories[j].score_out_of_10);
@@ -81,10 +101,18 @@ window.addEventListener('submit', function (event) {
             $tablerowCompare[j].children[1].className = 'black';
           }
         }
+        $form2.disabled = false;
+      });
+      xhr2.addEventListener('error', function () {
+        window.alert('Cannot establish network connection');
       });
       xhr2.send();
     });
+    xhr.addEventListener('error', function () {
+      window.alert('Cannot establish network connection');
+    });
     xhr.send();
+    $form2.disabled = true;
     var $tdFirst = document.querySelector('.first-city');
     var $tdSecond = document.querySelector('.second-city');
     $tdFirst.textContent = $cityDisplay1;
