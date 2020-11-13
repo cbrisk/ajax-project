@@ -17,12 +17,17 @@ var $cityDisplay2 = null;
 window.addEventListener('submit', function (event) {
   if (event.target.matches('.form-one')) {
     event.preventDefault();
-    city1 = $form1.elements.city.value;
-    $radio1 = document.querySelector('input[name="city"]:checked');
-    $cityDisplay1 = $radio1.nextElementSibling.firstChild.textContent;
+    if (url === null) {
+      city1 = $form1.elements.city.value;
+      $radio1 = document.querySelector('input[name="city"]:checked');
+      $header1.textContent = $radio1.nextElementSibling.firstChild.textContent;
+      url = 'https://api.teleport.org/api/urban_areas/slug:' + city1 + '/scores/';
+    } else {
+      $header1.textContent = $form1.elements.usercity.value;
+    }
     $form1.reset();
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://api.teleport.org/api/urban_areas/slug:' + city1 + '/scores/');
+    xhr.open('GET', url);
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
       data.firstCity = xhr.response;
@@ -31,7 +36,6 @@ window.addEventListener('submit', function (event) {
       }
     });
     xhr.send();
-    $header1.textContent = $cityDisplay1;
     viewSwapping('results');
     $favButton.textContent = 'Add to favorites';
   } else if (event.target.matches('.form-two')) {
@@ -93,10 +97,11 @@ window.addEventListener('click', function (event) {
   }
   if (event.target.matches('a.link')) {
     viewSwapping(event.target.getAttribute('data-view'));
+    $message.classList.add('nonvisible');
   } else if (event.target.matches('button.favorite')) {
     $favButton.textContent = '✔ Added!';
-    if (data.favoriteCities.indexOf($cityDisplay1) === -1) {
-      data.favoriteCities.push($cityDisplay1);
+    if (data.favoriteCities.indexOf($header1.textContent) === -1) {
+      data.favoriteCities.push($header1.textContent);
     }
   } else if (event.target.matches('button.remove')) {
     var $listItems = document.querySelectorAll('li');
@@ -131,6 +136,41 @@ $form2.addEventListener('input', function (event) {
     } else {
       opposite[m].disabled = false;
     }
+  }
+});
+
+var id = null;
+var url = null;
+var $message = document.querySelector('span.message');
+var $buttonResults = $form1.querySelector('button.results');
+var $divSpinner = document.querySelector('div.spinner');
+
+$form1.addEventListener('input', function (event) {
+  if (event.target.matches('input[name="usercity"]')) {
+    $divSpinner.classList.remove('nonvisible');
+    $message.classList.add('nonvisible');
+    $buttonResults.disabled = true;
+    clearTimeout(id);
+    id = setTimeout(function () {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'https://api.teleport.org/api/urban_areas/');
+      xhr.responseType = 'json';
+      xhr.addEventListener('load', function () {
+        data.cityOptions = xhr.response;
+        var items = data.cityOptions._links['ua:item'];
+        for (var j = 0; j < items.length; j++) {
+          if ($form1.elements.usercity.value === items[j].name) {
+            url = items[j].href + 'scores/';
+            $message.classList.add('nonvisible');
+            break;
+          }
+          $message.classList.remove('nonvisible');
+        }
+      });
+      xhr.send();
+      $buttonResults.disabled = false;
+      $divSpinner.classList.add('nonvisible');
+    }, 5000);
   }
 });
 

@@ -18,10 +18,19 @@
   <main>
     <div class="view" data-view="main">
       <div class="row">
-        <h3 class="open">Please choose a city below to view its ratings</h3>
+        <h3 class="open">Please choose a city below to view its ratings or just try typing in the search box</h3>
+      </div>
+      <div class="row spinner nonvisible">
+        <img src="images/spinner.gif" alt="Spinner Image">
       </div>
       <div class="row">
         <form class="form-one">
+          <div class="row margin">
+            <input type="text" name="usercity">
+          </div>
+          <div class="row margin">
+            <span class="message nonvisible">No such city found!</span>
+          </div>
           <div class="margin">
             <input type="radio" id="san-francisco1" name="city" value="san-francisco-bay-area">
             <label for="san-francisco1">San Francisco</label>
