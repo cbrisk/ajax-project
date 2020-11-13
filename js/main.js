@@ -6,6 +6,7 @@ var $results = document.querySelector('div[data-view="results"]');
 var $tablerow = $results.querySelectorAll('.table-row');
 var $compareResults = document.querySelector('div[data-view="compare-results"]');
 var $tablerowCompare = $compareResults.querySelectorAll('.table-row');
+var $summary = document.querySelector('span.summary');
 
 var city1 = null;
 var $radio1 = null;
@@ -34,6 +35,8 @@ window.addEventListener('submit', function (event) {
       for (var j = 0; j < data.firstCity.categories.length; j++) {
         $tablerow[j].children[1].textContent = Math.round(data.firstCity.categories[j].score_out_of_10);
       }
+      $summary.innerHTML = data.firstCity.summary;
+      $summary.textContent = $summary.textContent;
     });
     xhr.send();
     viewSwapping('results');
