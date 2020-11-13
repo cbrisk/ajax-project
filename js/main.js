@@ -100,8 +100,8 @@ window.addEventListener('click', function (event) {
     $message.classList.add('nonvisible');
   } else if (event.target.matches('button.favorite')) {
     $favButton.textContent = '✔ Added!';
-    if (data.favoriteCities.indexOf($cityDisplay1) === -1) {
-      data.favoriteCities.push($cityDisplay1);
+    if (data.favoriteCities.indexOf($header1.textContent) === -1) {
+      data.favoriteCities.push($header1.textContent);
     }
   } else if (event.target.matches('button.remove')) {
     var $listItems = document.querySelectorAll('li');
