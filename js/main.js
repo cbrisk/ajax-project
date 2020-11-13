@@ -41,7 +41,8 @@ window.addEventListener('submit', function (event) {
         $tablerow[j].children[1].textContent = Math.round(data.firstCity.categories[j].score_out_of_10);
       }
       $summary.innerHTML = data.firstCity.summary;
-      $summary.textContent = $summary.textContent;
+      var transfer = $summary.textContent;
+      $summary.textContent = transfer;
       $form1.disabled = false;
       $favButton.textContent = 'Add to favorites';
       url = null;
