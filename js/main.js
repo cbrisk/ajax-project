@@ -19,7 +19,7 @@ window.addEventListener('submit', function (event) {
     event.preventDefault();
     if (url === null) {
       city1 = $form1.elements.city.value;
-      $radio1 = document.querySelector('input[name="city"]:checked');
+      $radio1 = $form1.querySelector('input[name="city"]:checked');
       $header1.textContent = $radio1.nextElementSibling.firstChild.textContent;
       url = 'https://api.teleport.org/api/urban_areas/slug:' + city1 + '/scores/';
     } else {
@@ -38,6 +38,7 @@ window.addEventListener('submit', function (event) {
     xhr.send();
     viewSwapping('results');
     $favButton.textContent = 'Add to favorites';
+    url = null;
   } else if (event.target.matches('.form-two')) {
     event.preventDefault();
     city1 = $form2.elements.city.value;
