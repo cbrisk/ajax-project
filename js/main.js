@@ -8,6 +8,9 @@ var $compareResults = document.querySelector('div[data-view="compare-results"]')
 var $tablerowCompare = $compareResults.querySelectorAll('.table-row');
 var $summary = document.querySelector('span.summary');
 var $background = document.querySelector('div.background');
+var $modalMessage = document.querySelector('div.modal h3');
+var $divSpinner = document.querySelector('div.spinner');
+var $divSpinner2 = document.querySelector('div.spinner2');
 
 var city1 = null;
 var $radio1 = null;
@@ -34,7 +37,9 @@ window.addEventListener('submit', function (event) {
     xhr.addEventListener('load', function () {
       if (xhr.status !== 200) {
         $background.classList.remove('hidden');
+        $modalMessage.textContent = 'No data received';
         $form1.disabled = false;
+        $divSpinner.classList.add('nonvisible');
         return;
       }
       data.firstCity = xhr.response;
@@ -47,13 +52,17 @@ window.addEventListener('submit', function (event) {
       $form1.disabled = false;
       $favButton.textContent = 'Add to favorites';
       url = null;
+      $divSpinner.classList.add('nonvisible');
       viewSwapping('results');
     });
     xhr.addEventListener('error', function () {
-      window.alert('Cannot establish network connection');
+      $background.classList.remove('hidden');
+      $modalMessage.textContent = 'No network connection';
+      $divSpinner.classList.add('nonvisible');
     });
     xhr.send();
     $form1.disabled = true;
+    $divSpinner.classList.remove('nonvisible');
   } else if (event.target.matches('.form-two')) {
     event.preventDefault();
     city1 = $form2.elements.city.value;
@@ -72,8 +81,11 @@ window.addEventListener('submit', function (event) {
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
       if (xhr.status !== 200) {
-        window.alert('No data has been received');
+        $background.classList.remove('hidden');
+        $modalMessage.textContent = 'No data received';
         $form2.disabled = false;
+        $divSpinner2.classList.add('nonvisible');
+
         return;
       }
       data.firstCity = xhr.response;
@@ -85,8 +97,11 @@ window.addEventListener('submit', function (event) {
       xhr2.responseType = 'json';
       xhr2.addEventListener('load', function () {
         if (xhr2.status !== 200) {
-          window.alert('No data has been received');
+          $background.classList.remove('hidden');
+          $modalMessage.textContent = 'No data received';
           $form2.disabled = false;
+          $divSpinner2.classList.add('nonvisible');
+
           return;
         }
         data.secondCity = xhr2.response;
@@ -104,22 +119,28 @@ window.addEventListener('submit', function (event) {
           }
         }
         $form2.disabled = false;
+        var $tdFirst = document.querySelector('.first-city');
+        var $tdSecond = document.querySelector('.second-city');
+        $tdFirst.textContent = $cityDisplay1;
+        $tdSecond.textContent = $cityDisplay2;
+        $divSpinner2.classList.add('nonvisible');
+        viewSwapping('compare-results');
       });
       xhr2.addEventListener('error', function () {
-        window.alert('Cannot establish network connection');
+        $background.classList.remove('hidden');
+        $modalMessage.textContent = 'No network connection';
+        $divSpinner2.classList.add('nonvisible');
       });
       xhr2.send();
     });
     xhr.addEventListener('error', function () {
-      window.alert('Cannot establish network connection');
+      $background.classList.remove('hidden');
+      $modalMessage.textContent = 'No network connection';
+      $divSpinner2.classList.add('nonvisible');
     });
     xhr.send();
     $form2.disabled = true;
-    var $tdFirst = document.querySelector('.first-city');
-    var $tdSecond = document.querySelector('.second-city');
-    $tdFirst.textContent = $cityDisplay1;
-    $tdSecond.textContent = $cityDisplay2;
-    viewSwapping('compare-results');
+    $divSpinner2.classList.remove('nonvisible');
   }
 });
 
@@ -179,7 +200,6 @@ var id = null;
 var url = null;
 var $message = document.querySelector('span.message');
 var $buttonResults = $form1.querySelector('button.results');
-var $divSpinner = document.querySelector('div.spinner');
 
 $form1.addEventListener('input', function (event) {
   if (event.target.matches('input[name="usercity"]')) {

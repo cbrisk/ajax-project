@@ -181,6 +181,10 @@ input[name="usercity"]:focus {
   margin-bottom: 15px;
 }
 
+.row.spinner2 {
+  margin-bottom: 30px;
+}
+
 .modal {
   padding: 24px 16px;
   display: flex;
@@ -200,4 +204,9 @@ input[name="usercity"]:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
 }
