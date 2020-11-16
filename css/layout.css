@@ -1,12 +1,24 @@
+html,
+body {
+  height: 100%;
+}
+
 body {
   width: 375px;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-shrink: 0;
+}
+
+button.favorite {
+  margin: 0.5rem 0;
 }
 
 .hidden {
@@ -27,10 +39,6 @@ footer {
   body {
     width: 667px;
   }
-
-  footer {
-    position: static;
-  }
 }
 
 @media screen and (min-width: 768px) {
@@ -41,10 +49,6 @@ footer {
   html {
     font-size: 28px;
   }
-
-  footer {
-    position: absolute;
-  }
 }
 
 @media screen and (min-width: 1024px) {
@@ -52,7 +56,27 @@ footer {
     width: 1024px;
   }
 
-  footer {
-    position: sticky;
+  button.favorite {
+    margin: 1.5rem 0;
+  }
+
+  span.summary {
+    margin: 0 1.5rem;
+  }
+}
+
+@media screen and (min-width: 1536px) {
+  body {
+    width: 1536px;
+  }
+
+  html {
+    font-size: 34px;
+  }
+}
+
+@media screen and (min-width: 1950px) {
+  body {
+    width: 1950px;
   }
 }
