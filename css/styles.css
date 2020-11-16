@@ -63,6 +63,13 @@ button.remove {
   text-align: right;
 }
 
+button.ok {
+  padding: 8px 12px;
+  margin: 20px 0;
+  background-color: #04724d;
+  color: white;
+}
+
 button:hover,
 a.link:hover {
   cursor: pointer;
@@ -88,8 +95,9 @@ li {
   align-items: center;
   font-size: 1.25rem;
 }
+
 span.summary {
-  font-size: .7rem;
+  font-size: 0.7rem;
   padding: 0 4px;
 }
 
@@ -171,4 +179,34 @@ input[name="usercity"]:focus {
 
 .row.spinner {
   margin-bottom: 15px;
+}
+
+.row.spinner2 {
+  margin-bottom: 30px;
+}
+
+.modal {
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  background-color: white;
+}
+
+.background {
+  background-color: rgba(40, 40, 40, 0.9);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
 }

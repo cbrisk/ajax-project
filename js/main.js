@@ -7,6 +7,10 @@ var $tablerow = $results.querySelectorAll('.table-row');
 var $compareResults = document.querySelector('div[data-view="compare-results"]');
 var $tablerowCompare = $compareResults.querySelectorAll('.table-row');
 var $summary = document.querySelector('span.summary');
+var $background = document.querySelector('div.background');
+var $modalMessage = document.querySelector('div.modal h3');
+var $divSpinner = document.querySelector('div.spinner');
+var $divSpinner2 = document.querySelector('div.spinner2');
 
 var city1 = null;
 var $radio1 = null;
@@ -31,17 +35,34 @@ window.addEventListener('submit', function (event) {
     xhr.open('GET', url);
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
+      if (xhr.status !== 200) {
+        $background.classList.remove('hidden');
+        $modalMessage.textContent = 'No data received';
+        $form1.disabled = false;
+        $divSpinner.classList.add('nonvisible');
+        return;
+      }
       data.firstCity = xhr.response;
       for (var j = 0; j < data.firstCity.categories.length; j++) {
         $tablerow[j].children[1].textContent = Math.round(data.firstCity.categories[j].score_out_of_10);
       }
       $summary.innerHTML = data.firstCity.summary;
-      $summary.textContent = $summary.textContent;
+      var transfer = $summary.textContent;
+      $summary.textContent = transfer;
+      $form1.disabled = false;
+      $favButton.textContent = 'Add to favorites';
+      url = null;
+      $divSpinner.classList.add('nonvisible');
+      viewSwapping('results');
+    });
+    xhr.addEventListener('error', function () {
+      $background.classList.remove('hidden');
+      $modalMessage.textContent = 'No network connection';
+      $divSpinner.classList.add('nonvisible');
     });
     xhr.send();
-    viewSwapping('results');
-    $favButton.textContent = 'Add to favorites';
-    url = null;
+    $form1.disabled = true;
+    $divSpinner.classList.remove('nonvisible');
   } else if (event.target.matches('.form-two')) {
     event.preventDefault();
     city1 = $form2.elements.city.value;
@@ -59,6 +80,14 @@ window.addEventListener('submit', function (event) {
     xhr.open('GET', 'https://api.teleport.org/api/urban_areas/slug:' + city1 + '/scores/');
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
+      if (xhr.status !== 200) {
+        $background.classList.remove('hidden');
+        $modalMessage.textContent = 'No data received';
+        $form2.disabled = false;
+        $divSpinner2.classList.add('nonvisible');
+
+        return;
+      }
       data.firstCity = xhr.response;
       for (var j = 0; j < data.firstCity.categories.length; j++) {
         $tablerowCompare[j].children[1].textContent = Math.round(data.firstCity.categories[j].score_out_of_10);
@@ -67,6 +96,14 @@ window.addEventListener('submit', function (event) {
       xhr2.open('GET', 'https://api.teleport.org/api/urban_areas/slug:' + city2 + '/scores/');
       xhr2.responseType = 'json';
       xhr2.addEventListener('load', function () {
+        if (xhr2.status !== 200) {
+          $background.classList.remove('hidden');
+          $modalMessage.textContent = 'No data received';
+          $form2.disabled = false;
+          $divSpinner2.classList.add('nonvisible');
+
+          return;
+        }
         data.secondCity = xhr2.response;
         for (j = 0; j < data.secondCity.categories.length; j++) {
           $tablerowCompare[j].children[2].textContent = Math.round(data.secondCity.categories[j].score_out_of_10);
@@ -81,15 +118,29 @@ window.addEventListener('submit', function (event) {
             $tablerowCompare[j].children[1].className = 'black';
           }
         }
+        $form2.disabled = false;
+        var $tdFirst = document.querySelector('.first-city');
+        var $tdSecond = document.querySelector('.second-city');
+        $tdFirst.textContent = $cityDisplay1;
+        $tdSecond.textContent = $cityDisplay2;
+        $divSpinner2.classList.add('nonvisible');
+        viewSwapping('compare-results');
+      });
+      xhr2.addEventListener('error', function () {
+        $background.classList.remove('hidden');
+        $modalMessage.textContent = 'No network connection';
+        $divSpinner2.classList.add('nonvisible');
       });
       xhr2.send();
     });
+    xhr.addEventListener('error', function () {
+      $background.classList.remove('hidden');
+      $modalMessage.textContent = 'No network connection';
+      $divSpinner2.classList.add('nonvisible');
+    });
     xhr.send();
-    var $tdFirst = document.querySelector('.first-city');
-    var $tdSecond = document.querySelector('.second-city');
-    $tdFirst.textContent = $cityDisplay1;
-    $tdSecond.textContent = $cityDisplay2;
-    viewSwapping('compare-results');
+    $form2.disabled = true;
+    $divSpinner2.classList.remove('nonvisible');
   }
 });
 
@@ -115,6 +166,8 @@ window.addEventListener('click', function (event) {
         $listItems[l].remove();
       }
     }
+  } else if (event.target.matches('button.ok')) {
+    $background.classList.add('hidden');
   }
 });
 
@@ -147,7 +200,6 @@ var id = null;
 var url = null;
 var $message = document.querySelector('span.message');
 var $buttonResults = $form1.querySelector('button.results');
-var $divSpinner = document.querySelector('div.spinner');
 
 $form1.addEventListener('input', function (event) {
   if (event.target.matches('input[name="usercity"]')) {
