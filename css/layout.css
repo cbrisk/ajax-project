@@ -75,7 +75,7 @@ button.favorite {
   }
 }
 
-@media screen and (min-width: 1950px) {
+@media screen and (min-width: 1900px) {
   body {
     width: 1950px;
   }
