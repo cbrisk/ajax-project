@@ -21,6 +21,10 @@ button.favorite {
   margin: 0.5rem 0;
 }
 
+img {
+  width: 12%;
+}
+
 .hidden {
   display: none !important;
 }
@@ -63,6 +67,10 @@ button.favorite {
   span.summary {
     margin: 0 1.5rem;
   }
+
+  img {
+    width: 8%;
+  }
 }
 
 @media screen and (min-width: 1536px) {
@@ -72,6 +80,10 @@ button.favorite {
 
   html {
     font-size: 34px;
+  }
+
+  img {
+    width: 6%;
   }
 }
 
