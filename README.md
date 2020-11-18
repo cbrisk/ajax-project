@@ -4,6 +4,12 @@ A dynamic HTML, CSS, and JavaScript solo project.
 
 Live Link: https://cbrisk.github.io/ajax-project/
 
+## Technologies Used
+
+- HTML5
+- CSS3
+- JavaScript
+
 ## Main Features of this App
 
 * Users can view quality of life ratings for a couple of preselected cities
@@ -13,3 +19,25 @@ Live Link: https://cbrisk.github.io/ajax-project/
 * Users can delete cities in the favorites list
 * Users can compare the ratings of two cities (only select cities)
 * Users can view the compared cities ratings with color coding on higher scores
+
+## Preview
+
+![SGT React](images/preview.gif)
+
+## Development
+
+
+### Getting Started
+
+1. Clone the repository.
+
+    ```shell
+    git clone https://github.com/cbrisk/ajax-project.git
+    cd ajax-project
+    ```
+
+1. Install all dependencies with NPM.
+
+    ```shell
+    npm install
+    ```
