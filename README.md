@@ -1,6 +1,6 @@
 # City Quality of Life
 
-A dynamic HTML, CSS, and JavaScript solo project.
+A web application for users to check and compare the quality of life for select cities worldwide.
 
 Live Link: https://cbrisk.github.io/ajax-project/
 
