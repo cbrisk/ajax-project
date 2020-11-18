@@ -22,7 +22,7 @@ Live Link: https://cbrisk.github.io/ajax-project/
 
 ## Preview
 
-![SGT React](images/preview.gif)
+![Preview image of City Quality of Life](images/preview.gif)
 
 ## Development
 
