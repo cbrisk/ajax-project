@@ -22,7 +22,7 @@ var $cityDisplay2 = null;
 window.addEventListener('submit', function (event) {
   if (event.target.matches('.form-one')) {
     event.preventDefault();
-    if (url === null) {
+    if (url === null) { // If url has not been set with the textbox search
       city1 = $form1.elements.city.value;
       $radio1 = $form1.querySelector('input[name="city"]:checked');
       $header1.textContent = $radio1.nextElementSibling.firstChild.textContent;
@@ -46,12 +46,12 @@ window.addEventListener('submit', function (event) {
       for (var j = 0; j < data.firstCity.categories.length; j++) {
         $tablerow[j].children[1].textContent = Math.round(data.firstCity.categories[j].score_out_of_10);
       }
-      $summary.innerHTML = data.firstCity.summary;
+      $summary.innerHTML = data.firstCity.summary; // Removes the undesirable HTML markup from response
       var transfer = $summary.textContent;
       $summary.textContent = transfer;
       $form1.disabled = false;
       $favButton.textContent = 'Add to favorites';
-      url = null;
+      url = null; // Reset the url
       $divSpinner.classList.add('nonvisible');
       viewSwapping('results');
     });
@@ -61,7 +61,7 @@ window.addEventListener('submit', function (event) {
       $divSpinner.classList.add('nonvisible');
     });
     xhr.send();
-    $form1.disabled = true;
+    $form1.disabled = true; // Disables the form during network request
     $divSpinner.classList.remove('nonvisible');
   } else if (event.target.matches('.form-two')) {
     event.preventDefault();
@@ -72,7 +72,7 @@ window.addEventListener('submit', function (event) {
     $radio2 = document.querySelector('input[name="city2"]:checked');
     $cityDisplay2 = $radio2.nextElementSibling.firstChild.textContent;
     $form2.reset();
-    for (var o = 0; o < $form2FirstColumnElements.length; o++) {
+    for (var o = 0; o < $form2FirstColumnElements.length; o++) { // Resets any disabled radio buttons
       $form2FirstColumnElements[o].disabled = false;
       $form2SecondColumnElements[o].disabled = false;
     }
@@ -107,6 +107,7 @@ window.addEventListener('submit', function (event) {
         data.secondCity = xhr2.response;
         for (j = 0; j < data.secondCity.categories.length; j++) {
           $tablerowCompare[j].children[2].textContent = Math.round(data.secondCity.categories[j].score_out_of_10);
+          // Compares the two results for color coding
           if (Math.round(data.secondCity.categories[j].score_out_of_10) > Math.round(data.firstCity.categories[j].score_out_of_10)) {
             $tablerowCompare[j].children[2].className = 'green';
             $tablerowCompare[j].children[1].className = 'red';
@@ -155,18 +156,18 @@ window.addEventListener('click', function (event) {
     $message.classList.add('nonvisible');
   } else if (event.target.matches('button.favorite')) {
     $favButton.textContent = '✔ Added!';
-    if (data.favoriteCities.indexOf($header1.textContent) === -1) {
+    if (data.favoriteCities.indexOf($header1.textContent) === -1) { // If city is not listed in favorite cities, add it now
       data.favoriteCities.push($header1.textContent);
     }
   } else if (event.target.matches('button.remove')) {
     var $listItems = document.querySelectorAll('li');
     for (var l = 0; l < $listItems.length; l++) {
-      if (event.target.closest('li') === $listItems[l]) {
+      if (event.target.closest('li') === $listItems[l]) { // Removes the requested city from data model and DOM
         data.favoriteCities.splice(l, 1);
         $listItems[l].remove();
       }
     }
-  } else if (event.target.matches('button.ok')) {
+  } else if (event.target.matches('button.ok')) { // Ok button to acknowledge errors
     $background.classList.add('hidden');
   }
 });
@@ -187,6 +188,7 @@ $form2.addEventListener('input', function (event) {
     clicked = $form2SecondColumnElements;
     opposite = $form2FirstColumnElements;
   }
+  // Iterates through opposite column clicked, and disables corresponding city, reenables any other cities
   for (var m = 0; m < clicked.length; m++) {
     if (event.target === clicked[m]) {
       opposite[m].disabled = true;
@@ -199,15 +201,13 @@ $form2.addEventListener('input', function (event) {
 var id = null;
 var url = null;
 var $message = document.querySelector('span.message');
-var $buttonResults = $form1.querySelector('button.results');
 
 $form1.addEventListener('input', function (event) {
   if (event.target.matches('input[name="usercity"]')) {
     $divSpinner.classList.remove('nonvisible');
     $message.classList.add('nonvisible');
-    $buttonResults.disabled = true;
     clearTimeout(id);
-    id = setTimeout(function () {
+    id = setTimeout(function () { // Waits 5 secs to check whether input is a valid city
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'https://api.teleport.org/api/urban_areas/');
       xhr.responseType = 'json';
@@ -222,10 +222,11 @@ $form1.addEventListener('input', function (event) {
           }
           $message.classList.remove('nonvisible');
         }
+        $form1.disabled = false;
+        $divSpinner.classList.add('nonvisible');
       });
       xhr.send();
-      $buttonResults.disabled = false;
-      $divSpinner.classList.add('nonvisible');
+      $form1.disabled = true; // Disables the form during network request
     }, 5000);
   }
 });
@@ -241,7 +242,7 @@ function viewSwapping(dataView) {
     }
   }
   if (dataView === 'favorites') {
-    $favList.innerHTML = '';
+    $favList.innerHTML = ''; // Clears out the list before repopulating based on what is currently in the data model
     for (var k = 0; k < data.favoriteCities.length; k++) {
       var $li = document.createElement('li');
       $li.textContent = data.favoriteCities[k];
@@ -252,5 +253,5 @@ function viewSwapping(dataView) {
       $favList.appendChild($li);
     }
   }
-  data.view = dataView;
+  data.view = dataView; // Sets the view in the data model
 }
