@@ -22,6 +22,9 @@ var $cityDisplay2 = null;
 window.addEventListener('submit', function (event) {
   if (event.target.matches('.form-one')) {
     event.preventDefault();
+    if (url === null && $form1.querySelector('input[name="city"]:checked') === null) { // If user hasn't selected anything, exit function
+      return;
+    }
     if (url === null) { // If url has not been set with the textbox search
       city1 = $form1.elements.city.value;
       $radio1 = $form1.querySelector('input[name="city"]:checked');
@@ -65,6 +68,10 @@ window.addEventListener('submit', function (event) {
     $divSpinner.classList.remove('nonvisible');
   } else if (event.target.matches('.form-two')) {
     event.preventDefault();
+    // If user hasn't selected 2 cities, exit function
+    if (document.querySelector('input[name="city"]:checked') === null || document.querySelector('input[name="city2"]:checked') === null) {
+      return;
+    }
     city1 = $form2.elements.city.value;
     $radio1 = document.querySelector('input[name="city"]:checked');
     $cityDisplay1 = $radio1.nextElementSibling.firstChild.textContent;
@@ -232,6 +239,7 @@ $form1.addEventListener('input', function (event) {
 });
 
 var $favList = document.querySelector('ol.fav-list');
+var $noFav = document.querySelector('h5');
 
 function viewSwapping(dataView) {
   for (var i = 0; i < $views.length; i++) {
@@ -243,14 +251,20 @@ function viewSwapping(dataView) {
   }
   if (dataView === 'favorites') {
     $favList.innerHTML = ''; // Clears out the list before repopulating based on what is currently in the data model
-    for (var k = 0; k < data.favoriteCities.length; k++) {
-      var $li = document.createElement('li');
-      $li.textContent = data.favoriteCities[k];
-      var $remove = document.createElement('button');
-      $remove.className = 'remove';
-      $remove.textContent = 'Remove';
-      $li.appendChild($remove);
-      $favList.appendChild($li);
+    if (data.favoriteCities.length === 0) {
+      $noFav.textContent = 'Sorry, no favorite cities found.';
+      $noFav.classList.remove('hidden');
+    } else {
+      $noFav.classList.add('hidden');
+      for (var k = 0; k < data.favoriteCities.length; k++) {
+        var $li = document.createElement('li');
+        $li.textContent = data.favoriteCities[k];
+        var $remove = document.createElement('button');
+        $remove.className = 'remove';
+        $remove.textContent = 'Remove';
+        $li.appendChild($remove);
+        $favList.appendChild($li);
+      }
     }
   }
   data.view = dataView; // Sets the view in the data model

@@ -4,7 +4,6 @@ body {
 }
 
 body {
-  width: 375px;
   display: flex;
   flex-direction: column;
 }
@@ -39,27 +38,13 @@ img {
   width: 40%;
 }
 
-@media screen and (min-width: 667px) {
-  body {
-    width: 667px;
-  }
-}
-
 @media screen and (min-width: 768px) {
-  body {
-    width: 768px;
-  }
-
   html {
     font-size: 28px;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  body {
-    width: 1024px;
-  }
-
   button.favorite {
     margin: 1.5rem 0;
   }
@@ -74,21 +59,7 @@ img {
 }
 
 @media screen and (min-width: 1536px) {
-  body {
-    width: 1536px;
-  }
-
-  html {
-    font-size: 34px;
-  }
-
   img {
     width: 6%;
-  }
-}
-
-@media screen and (min-width: 1900px) {
-  body {
-    width: 1900px;
   }
 }

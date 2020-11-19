@@ -32,8 +32,11 @@ button.results {
   color: white;
 }
 
-input {
-  margin-right: 10px;
+input[type="radio"] {
+  margin-right: 0.5rem;
+  margin-left: 2rem;
+  height: 0.7rem;
+  width: 0.7rem;
 }
 
 label {
@@ -106,6 +109,8 @@ span.message {
 
 input[name="usercity"] {
   border: 2px solid#b0a9a9;
+  border-radius: 5px;
+  font-size: 1rem;
 }
 
 input[name="usercity"]:focus {
