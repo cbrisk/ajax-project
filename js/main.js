@@ -174,6 +174,10 @@ window.addEventListener('click', function (event) {
         $listItems[l].remove();
       }
     }
+    if (!data.favoriteCities.length) {
+      $noFav.textContent = 'Sorry, no favorite cities found.';
+      $noFav.classList.remove('hidden');
+    }
   } else if (event.target.matches('button.ok')) { // Ok button to acknowledge errors
     $background.classList.add('hidden');
   }
@@ -222,7 +226,7 @@ $form1.addEventListener('input', function (event) {
         data.cityOptions = xhr.response;
         var items = data.cityOptions._links['ua:item'];
         for (var j = 0; j < items.length; j++) {
-          if ($form1.elements.usercity.value === items[j].name) {
+          if ($form1.elements.usercity.value.toLowerCase() === items[j].name.toLowerCase()) {
             url = items[j].href + 'scores/';
             $message.classList.add('nonvisible');
             break;
