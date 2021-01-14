@@ -226,7 +226,7 @@ $form1.addEventListener('input', function (event) {
         data.cityOptions = xhr.response;
         var items = data.cityOptions._links['ua:item'];
         for (var j = 0; j < items.length; j++) {
-          if ($form1.elements.usercity.value.toLowerCase() === items[j].name.toLowerCase()) {
+          if ($form1.elements.usercity.value.toLowerCase().includes(items[j].name.toLowerCase())) {
             url = items[j].href + 'scores/';
             $message.classList.add('nonvisible');
             break;
